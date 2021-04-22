@@ -12,8 +12,8 @@ class MairaParser(ParserInterface):
         self.data = pd.DataFrame
         self.taxa = {}
         taxid_to_name_path = "/Users/timolucas/PycharmProjects/phd-project/resources/ncbi_taxid_to_name"
-        self.taxid_to_name_parser = Taxid2NameParser(taxid_to_name_path)
-        self.taxid_to_name_parser.load_data_source()
+        self.taxid_to_name_parser = Taxid2NameParser()
+        self.taxid_to_name_parser.load_data_source(taxid_to_name_path)
 
     def load_data_source(self, file_path):
         if os.path.isfile(file_path):
@@ -32,6 +32,6 @@ class MairaParser(ParserInterface):
             self.taxa[cur_tax].set_name(self.taxid_to_name_parser.taxid_to_name_dict[cur_tax])
 
             print(
-                f"taxid: {self.taxa[tax[1][int(1)]].taxid}   name: {self.taxa[cur_tax].name}   abundance: {self.taxa[cur_tax].abundance}")
+                f"taxid: {self.taxa[tax[1][int(1)]].taxid}  name: {self.taxa[cur_tax].name}   abundance: {self.taxa[cur_tax].abundance}")
 
         # loop over all taxids in maira summary and create dictionary: key is taxid values are level, completeness and abundance
