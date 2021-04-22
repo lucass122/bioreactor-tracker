@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 
-from Taxon import Taxon
+from model.Taxon import Taxon
 from parser.ParserInterface import ParserInterface
 from parser.Taxid2NameParser import Taxid2NameParser
 
