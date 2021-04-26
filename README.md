@@ -1,1 +1,3 @@
 # bioreactor-tracker
+# In lack of a better name...
+# Progress of my PhD project
