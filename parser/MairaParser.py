@@ -14,6 +14,8 @@ class MairaParser(ParserInterface):
         taxid_to_name_path = "/Users/timolucas/PycharmProjects/phd-project/resources/ncbi_taxid_to_name"
         self.taxid_to_name_parser = Taxid2NameParser()
         self.taxid_to_name_parser.load_data_source(taxid_to_name_path)
+        self.names = []
+        self.abundances = []
 
     def load_data_source(self, file_path):
         if os.path.isfile(file_path):
@@ -27,9 +29,15 @@ class MairaParser(ParserInterface):
             cur_tax = tax[1][int(1)]
             # fill taxa dictionary by first dreating taxon objects with lwvel and abundance and then
             # adding taxid to it and then with taxid adding name to it using the taxid2name object from above
-            self.taxa[cur_tax] = Taxon(tax[1][3], tax[1][0])
-            self.taxa[cur_tax].set_taxid(cur_tax)
-            self.taxa[cur_tax].set_name(self.taxid_to_name_parser.taxid_to_name_dict[cur_tax])
+            abundance = tax[1][3]
+            self.abundances.append(abundance)
+            level = tax[1][0]
+            self.taxa[cur_tax] = Taxon(abundance, level)
+            taxid = cur_tax
+            self.taxa[cur_tax].set_taxid(taxid)
+            name = self.taxid_to_name_parser.taxid_to_name_dict[cur_tax]
+            self.taxa[cur_tax].set_name(name)
+            self.names.append(name)
 
             print(
                 f"taxid: {self.taxa[tax[1][int(1)]].taxid}  name: {self.taxa[cur_tax].name}   abundance: {self.taxa[cur_tax].abundance}")

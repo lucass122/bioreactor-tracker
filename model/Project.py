@@ -1,7 +1,7 @@
 from datetime import date
 
 
-# simple class representing the structure of a project. has project name and sample
+# simple class representing the structure of a project. has project name, sample, description and a date
 
 
 class Project:
