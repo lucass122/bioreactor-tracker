@@ -24,22 +24,26 @@ class MairaParser(ParserInterface):
         # level | taxid | completeness | abundance
 
     def extract_data(self):
+        self.taxa = {}
+        self.names = []
+        self.abundances = []
         for tax in self.data.iterrows():
             # taxon object with abundance and level (tax[1][0] and tax[1][3]
             cur_tax = tax[1][int(1)]
             # fill taxa dictionary by first dreating taxon objects with lwvel and abundance and then
             # adding taxid to it and then with taxid adding name to it using the taxid2name object from above
             abundance = tax[1][3]
-            self.abundances.append(abundance)
-            level = tax[1][0]
-            self.taxa[cur_tax] = Taxon(abundance, level)
-            taxid = cur_tax
-            self.taxa[cur_tax].set_taxid(taxid)
-            name = self.taxid_to_name_parser.taxid_to_name_dict[cur_tax]
-            self.taxa[cur_tax].set_name(name)
-            self.names.append(name)
+            if abundance != 0.0:
+                self.abundances.append(abundance)
+                level = tax[1][0]
+                self.taxa[cur_tax] = Taxon(abundance, level)
+                taxid = cur_tax
+                self.taxa[cur_tax].set_taxid(taxid)
+                name = self.taxid_to_name_parser.taxid_to_name_dict[cur_tax]
+                self.taxa[cur_tax].set_name(name)
+                self.names.append(name)
 
-            print(
-                f"taxid: {self.taxa[tax[1][int(1)]].taxid}  name: {self.taxa[cur_tax].name}   abundance: {self.taxa[cur_tax].abundance}")
+            # print(
+            #     f"taxid: {self.taxa[tax[1][int(1)]].taxid}  name: {self.taxa[cur_tax].name}   abundance: {self.taxa[cur_tax].abundance}")
 
         # loop over all taxids in maira summary and create dictionary: key is taxid values are level, completeness and abundance
