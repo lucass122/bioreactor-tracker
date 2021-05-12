@@ -35,7 +35,7 @@ class PieLive:
             # html.H3(children=f"{self.sample.description}"),
             dcc.Interval(
                 id='interval-component',
-                interval=1 * 2000,  # in milliseconds
+                interval=1 * 100,  # in milliseconds
                 n_intervals=0),
             # html.H4(children=f"{self.sample.taxon_names}"),
             # html.H5(children=f"{self.sample.taxon_abundances}"),
@@ -70,13 +70,13 @@ class PieLive:
                     Input('interval-component', 'n_intervals'))
     def update_graph_live(self, __maira_parser=__maira_parser):
 
-        __maira_parser.load_data_source("/Users/timolucas/PycharmProjects/phd-project/resources/simulated_tree")
-        __maira_parser.extract_data()
-        # __maira_parser.abundances[0] += 2
-        # __maira_parser.abundances[2] += 1
-        # __maira_parser.abundances[1] += 3
-        # __maira_parser.abundances[5] -= 2
-        # __maira_parser.abundances[6] -= 4
+        # __maira_parser.load_data_source("/Users/timolucas/PycharmProjects/phd-project/resources/simulated_tree")
+        # __maira_parser.extract_data()
+        __maira_parser.abundances[0] += 2
+        __maira_parser.abundances[2] += 1
+        __maira_parser.abundances[1] += 3
+        __maira_parser.abundances[5] -= 2
+        __maira_parser.abundances[6] -= 4
         fig = px.pie(__maira_parser.abundances, values=__maira_parser.abundances, names=__maira_parser.names)
 
         return fig
