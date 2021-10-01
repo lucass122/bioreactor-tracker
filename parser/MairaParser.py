@@ -7,7 +7,12 @@ from parser.ParserInterface import ParserInterface
 from parser.Taxid2NameParser import Taxid2NameParser
 
 
+# from functools import cache
+
+
+# !! TODO: Taxid2NameParser should not be created in MairaParser, rather the object should be passed down to it !!!
 class MairaParser(ParserInterface):
+    # @cache
     def __init__(self):
         self.data = pd.DataFrame
         self.taxa = {}
@@ -42,6 +47,8 @@ class MairaParser(ParserInterface):
                 name = self.taxid_to_name_parser.taxid_to_name_dict[cur_tax]
                 self.taxa[cur_tax].set_name(name)
                 self.names.append(name)
+                print(self.names)
+            print(self.abundances)
 
             # print(
             #     f"taxid: {self.taxa[tax[1][int(1)]].taxid}  name: {self.taxa[cur_tax].name}   abundance: {self.taxa[cur_tax].abundance}")

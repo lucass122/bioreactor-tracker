@@ -23,6 +23,7 @@ class PieLive:
     def plot(self):
         self.__maira_parser.load_data_source("/Users/timolucas/PycharmProjects/phd-project/resources/simulated_tree")
         self.__maira_parser.extract_data()
+        print(self.__maira_parser)
         # title=f"Bacterial abundances of sample {self.sample.name} as a pie chart")
         fig = px.pie(self.__maira_parser.abundances, values=self.__maira_parser.abundances,
                      names=self.__maira_parser.names)
@@ -30,12 +31,12 @@ class PieLive:
                       names=self.__maira_parser.names)
         # self.sample.taxon_abundances[0] = 10000
         self.__app.layout = html.Div(children=[
-            html.H1(children='Bioreactor monitoring software'),
+            html.H1(children='Bioreactor tracking software'),
             html.H2(children=f"Plot will change overtime as data is parsed with MAIRA"),
             # html.H3(children=f"{self.sample.description}"),
             dcc.Interval(
                 id='interval-component',
-                interval=1 * 100,  # in milliseconds
+                interval=1 * 1000,  # in milliseconds
                 n_intervals=0),
             # html.H4(children=f"{self.sample.taxon_names}"),
             # html.H5(children=f"{self.sample.taxon_abundances}"),
@@ -56,6 +57,7 @@ class PieLive:
 
     # function to filter zero values from abundance list and removing the names accordingly
     # if it's called new filtered lists are created and the original lists in the sample object are replaced by them
+
     def filter_zero(self):
         abundances_filtered = []
         names_filtered = []
