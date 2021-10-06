@@ -71,7 +71,7 @@ class PieLive:
     @__app.callback(Output('live-graph', 'figure'),
                     Input('interval-component', 'n_intervals'))
     def update_graph_live(self, __maira_parser=__maira_parser):
-
+        # SIMULATING SOME CHANGES
         # __maira_parser.load_data_source("/Users/timolucas/PycharmProjects/phd-project/resources/simulated_tree")
         # __maira_parser.extract_data()
         __maira_parser.abundances[0] += 2
