@@ -10,7 +10,7 @@ from parser.Taxid2NameParser import Taxid2NameParser
 # from functools import cache
 
 
-# !! TODO: Taxid2NameParser should not be created in MairaParser, rather the object should be passed down to it !!!
+# !! TODO: Taxid2NameParser should not be created in MairaParser, rather the object should be passed down to it to avoid multipe maira parsers
 class MairaParser(ParserInterface):
     # @cache
     def __init__(self):

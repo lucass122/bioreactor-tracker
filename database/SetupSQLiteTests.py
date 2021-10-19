@@ -6,8 +6,26 @@ import sqlite3
 # these 2 parameters set db name and row number of the tables in the sqlite database
 from aifc import Error
 
-DATABASE_NAME = 'birts_test_1.db'
-ROW_NUMBER = 100000
+
+def inc_sample_id(index, variable_to_inc):
+    if (index % 14) == 0:
+        variable_to_inc = variable_to_inc + 1
+        return (variable_to_inc)
+    return (variable_to_inc)
+
+
+DATABASE_NAME = '/Users/timolucas/PycharmProjects/phd-project/database/dash_test.db'
+ROW_NUMBER = 1000
+sample_id = 0
+test_names = ['Pseudomonas aeruginosa', 'Acinetobacter baumannii', 'Neisseria meningitidis', 'Erwinia',
+              'Escherichia coli', 'Klebsiella pneumoniae', 'Staphylococcus aureus', 'Streptococcus oralis',
+              'Streptococcus agalactiae', 'Streptococcus pneumoniae', 'Streptococcus pyogenes', 'Enterococcus faecalis',
+              'Streptococcus mitis', 'Streptococcus pseudopneumoniae']
+test_abundances = [200, 250, 235, 442, 335, 1200, 2100, 3210, 460, 570, 490, 679, 479, 4500]
+print(len(test_abundances))
+
+
+# increment sample id every 13th row
 
 
 def create_connection(db_file):
@@ -49,7 +67,7 @@ if __name__ == '__main__':
     meta6 TEXT)"""
 
     # columns are as follows
-    # read id (integer); read taxonomy ( text); abundance ( integer); sample id (integer); project id (integer); meta1 (integer); meta2 (integer); meta3 (integer); meta4 (text); meta5(text); meta6(text)
+    # OTU id (integer); OTU taxonomy ( text); OTU abundance ( integer); sample id (integer); project id (integer); meta1 (integer); meta2 (integer); meta3 (integer); meta4 (text); meta5(text); meta6(text)
     # read taxonomy is the taxonomy parsed from maira
     # abundance is the bacterial abundance parsed from maira
     #  sample id is an integer that represents the ID of the sample the read originates from
@@ -57,10 +75,15 @@ if __name__ == '__main__':
     #  meta1-meta6 are placeholders for metadata that may be included into the database in the future
     cursor.execute(create_command)
 
-    # fills test table with 10.000 lines change upper limit to change database row number
-    for i in range(1, ROW_NUMBER):
-        cursor.execute(f"INSERT INTO birts_db VALUES ({i},'Clostridium Kluyveri', {random.randint(1, 100000)},"
-                       f" {random.randint(1, 100000)}, {random.randint(1, 100000)}, {random.randint(1, 100000)},"
+    # fills test table with $ROW_NUMBER lines change variable to adjust DB size
+    for i in range(0, ROW_NUMBER):
+        sample_id = inc_sample_id(i, sample_id)
+        name = test_names[i % 14]
+        # print(name)
+        abundance = test_abundances[i % 14] + (random.randint(0, 1000))
+        # print(abundance)
+        cursor.execute(f"INSERT INTO birts_db VALUES ({i},'{name}', {abundance},"
+                       f" {sample_id}, 1, {random.randint(1, 100000)},"
                        f" {random.randint(1, 100000)}, {random.randint(1, 100000)},'asdf','asdf','asdf')")
 
     cursor.execute("SELECT * FROM birts_db")
